@@ -8,7 +8,6 @@
   "name": "emilio",
   "version": "1.0.0",
   "main": "app.js",
-  "devDependencies": {},
   "scripts": {
     "dev": "node --watch app.js"
   },
