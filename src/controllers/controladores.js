@@ -3,7 +3,7 @@ const {newConnection}= require('../db/database')
 async function obtener(req, res) {
     const conexion= await newConnection()
     const result = await conexion.query("SELECT * FROM tasks")
-    res.json(result[0])
+    res.status(201).json(result[0])
 
 
 }
@@ -46,10 +46,10 @@ async function actualizar(req, res) {
                 if (result.affectedRows === 0) {
                     res.json({msg: "No se encontró la task con el id especificado."});
                 } else {
-                    res.json({msg: "Se editó la task correctamente.", result});
+                    res.status(200).json({msg: "Se editó la task correctamente.", result});
                 }
         } else {
-            res.json({msg: "Los títulos y descripciones no deben contener caracteres especiales o espacios innecesarios."})
+            res.status(404).json({msg: "Los títulos y descripciones no deben contener caracteres especiales o espacios innecesarios."})
         }
 
 
@@ -60,12 +60,12 @@ async function eliminar(req, res) {
     const id= req.params.id;
     const [result] = await conexion.query("DELETE FROM tasks WHERE id=?",id)
     if (result.affectedRows === 0) {
-        res.json({msg: "No se encontró la task con el id especificado."});
+        res.status(400).json({msg: "No se encontró la task con el id especificado."});
     } else {
-        res.json({msg: "Se eliminó la task correctamente."});
+        res.status(200).json({msg: "Se eliminó la task correctamente."});
     }
 
-}[]
+}
 
 async function obtenerId(req,res){
     const conexion= await newConnection()
@@ -74,7 +74,7 @@ async function obtenerId(req,res){
     if(!result){
         res.status(404).json({message:'Task no encontrado'})
     } else {
-        res.json(result[0])
+        res.status(200).json(result[0])
     }
 } 
 
